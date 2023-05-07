@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1250">
+	<TITLE>Drzewa decyzyjne</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.0.1  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20200508;10243923">
+	<META NAME="Originator" CONTENT="Microsoft Word 9">
+	<META NAME="ProgId" CONTENT="Word.Document">
+	<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Aga</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>asdf</o:LastAuthor>
+  <o:Revision>8</o:Revision>
+  <o:TotalTime>18</o:TotalTime>
+  <o:Created>2006-05-30T09:24:00Z</o:Created>
+  <o:LastSaved>2009-05-21T06:53:00Z</o:LastSaved>
+  <o:Pages>3</o:Pages>
+  <o:Words>832</o:Words>
+  <o:Characters>4745</o:Characters>
+  <o:Company>Gucie</o:Company>
+  <o:Lines>39</o:Lines>
+  <o:Paragraphs>9</o:Paragraphs>
+  <o:CharactersWithSpaces>5827</o:CharactersWithSpaces>
+  <o:Version>9.2812</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+	<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:HyphenationZone>21</w:HyphenationZone>
+ </w:WordDocument>
+</xml><![endif]-->
+	<STYLE TYPE="text/css">
+	<!--
+		P { color: #000000 }
+		H3 { color: #000000 }
+		H3.cjk { font-family: "SimSun" }
+		H3.ctl { font-family: "Mangal" }
+		A:link { color: #0000ff }
+		A:visited { color: #800080 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="pl-PL" TEXT="#000000" LINK="#0000ff" VLINK="#800080" DIR="LTR">
+<P LANG="en-US"><FONT FACE="Arial"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Decision
+trees</B></FONT></FONT></P>
+<P STYLE="line-height: 150%">&nbsp;</P>
+<H3 LANG="en-US" CLASS="western">Data sets</H3>
+<P LANG="en-US" STYLE="line-height: 150%">Three data sets are
+prepared for testing the decision tree construction algorithm:
+lenses, car, tic. For each of these sets, a text file is available
+that contains subsequent feature vectors (class number in the last
+column) and a file with data description (attributes, classes).
+Attribute values &#8203;&#8203;and class numbers must be consecutive
+integers greater than zero.</P>
+<H3 LANG="en-US" CLASS="western">Decision tree building</H3>
+<P LANG="en-US" ALIGN=JUSTIFY STYLE="line-height: 150%">The <B>addnode</B>
+function is used for tree construction. An algorithm has been
+implemented in it, in which the attribute with the minimum entropy is
+selected in each node. The <B>build_lenses</B> script contains all
+commands related to data preparation, tree construction and testing.</P>
+<H3 LANG="en-US" CLASS="western">Decision tree structure</H3>
+<P LANG="en-US" ALIGN=JUSTIFY STYLE="line-height: 150%">The addnode
+function returns a tree in the form of an array, each column of which
+corresponds to one node. The number of rows is one greater than the
+maximum number of attribute values. The last line contains the
+attribute number used in the node (or class number when the node is a
+leaf). The other lines contain column indexes corresponding to child
+nodes (or zeros when the node is a leaf).</P>
+<P LANG="en-US" ALIGN=JUSTIFY STYLE="line-height: 150%">For example,
+if a certain column has the form [2 0 4 1] ', this means that
+attribute 1 has been used in this node. For the first attribute
+value, the child node is in the 2nd column of the table, there is no
+branch for the second value (this situation may take place when in
+the training set there were no examples with this attribute value 1),
+for the third value of an attribute 1 the child node is in the column
+4.</P>
+<P LANG="en-US" ALIGN=JUSTIFY STYLE="line-height: 150%">If the column
+has the form [0 0 0 3] ', this means that the node is a leaf to which
+class 3 has been assigned.</P>
+<P LANG="en-US" ALIGN=JUSTIFY STYLE="line-height: 150%">In addition
+to the described table, the constructed tree can be &quot;drawn&quot;
+in a text file using the <B>printnode</B> function.</P>
+<P ALIGN=JUSTIFY STYLE="line-height: 150%"><IMG SRC="tree_array_explanation.jpg" NAME="grafika1" ALIGN=LEFT WIDTH=505 HEIGHT=406 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<H3 LANG="en-US" CLASS="western">Usable functions</H3>
+<OL>
+	<LI><P LANG="en-US" STYLE="line-height: 150%">Open the script
+	<B>build_lenses.</B><BR>In the first command, enter the path and
+	file name of <B>lenses.txt</B>. The effect of the first fragment of
+	the file is the division of the data set into training set p1 (odd
+	lines) and test p2 (even lines).<BR>The next fragment is responsible
+	for creating the tree (<B>addnode</B> function) and saving it in a
+	file with the given name.<BR>The last instructions calculate the
+	classification error (number of incorrectly classified / number of
+	all vectors) for the training and test set.</P>
+	<LI><P LANG="en-US" STYLE="line-height: 150%">Run the <B>build_lenses</B>
+	script for the lenses data.<BR>After the tree is constructed, the
+	following variables are available:<BR><B>D</B> &ndash; tree in the
+	form of an array<BR><B>TrainingVectors</B> &ndash; learning
+	vectors<BR><B>TrainingClasses</B> &ndash; class numbers of learning
+	vectors<BR><B>TestVectors</B> &ndash; test vectors<BR><B>TestClasses</B>
+	&ndash; class numbers of test vectors</P>
+	<LI><P LANG="en-US" STYLE="line-height: 150%"><SPAN STYLE="font-weight: normal">Classification.
+	The </SPAN><B>what_class</B> <SPAN STYLE="font-weight: normal">function
+	allows the classification of a single feature vector</SPAN><B><BR>k
+	= what_class(D, [3 1 2 1 1])</B><BR>or the entire data set<BR><B>k =
+	what_class(D, TestVectors)</B><BR>The function returns the class
+	number for each example, or 0 if the example does not reach any leaf
+	(when calculating the error, such cases are treated as examples of
+	incorrect classification).</P>
+</OL>
+<P LANG="en-US" STYLE="margin-left: 1.27cm; text-indent: -0.64cm; line-height: 150%">
+4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We run the <B>chart</B> script. An
+error graph is drawn as the tree grows. The error for the training
+set (red) drops to zero (during the construction of the tree, the
+nodes are divided until they reach only vectors of one class). The
+error for the test set (blue) first decreases and then begins to
+increase. This graph illustrates the phenomenon of overfitting a tree
+to learning data. You can see that it would be worth finishing the
+tree construction sooner or prune the complete tree.</P>
+<P LANG="en-US" STYLE="margin-left: 1.27cm; text-indent: -0.64cm; line-height: 150%">
+5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; When analyzing the D tree, you
+should consider where to prune the tree to get a smaller
+classification error. The distribution function may be helpful, as it
+returns an array containing the number of examples of individual
+classes reaching individual nodes. An array element with (i, j)
+coordinates is the number of class images in node j. Function
+call:<BR><B>dist</B> <B>= distribution(D, TrainingVectors,
+TrainingClasses)<BR></B><SPAN STYLE="font-weight: normal">another
+function:</SPAN></P>
+<P LANG="en-US" STYLE="margin-left: 1.27cm; line-height: 150%"><B>g =
+depth(D)</B></P>
+<P LANG="en-US" STYLE="margin-left: 1.27cm; line-height: 150%">returns
+the depth at which each of the D tree nodes lies.</P>
+<P LANG="en-US" STYLE="margin-left: 1.27cm; line-height: 150%">We
+check the classification error using the function
+<B>calc_error</B>:<BR><B>calc_error(D, TrainingVectors,
+TrainingClasses) -</B> error for training set<BR><B>calc_error(D,
+TestVectors, TestClasses)</B>&nbsp;&nbsp; - error for test set<BR>For
+the D tree constructed for the lenses data, for example, you can
+remove the last two columns (two leaves), remembering to replace the
+predecessor node (number 5) with a leaf (you should assign it the
+label of the class most represented; in this case, assigning a class
+3 label will reduce the error).</P>
+<P LANG="en-US" STYLE="margin-left: 1.27cm; text-indent: -0.64cm; line-height: 150%">
+6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We repeat the described exercises
+for the car and tic sets.<BR>- in the file <B>build_lenses</B> we
+change the name of the data set<BR>- we run the <B>build_lenses</B>
+script<BR>- we run the <B>chart</B> script<BR>The graphs again show
+that it would be advisable to reduce the tree.</P>
+<H3 LANG="en-US" CLASS="western">Exercise: 
+</H3>
+<P LANG="en-US" STYLE="margin-left: 1.27cm; text-indent: -0.64cm; line-height: 150%">
+1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Write pruning algorithm for more
+practical classification problem (car, letters, etc). The algorithm
+can be heuristic like prune nodes which are passed by few number of
+training examples or can be can be automated towards minimizing
+generalization error based on a validation set of examples. The
+following call to the helper function:<BR><B>delete_node(D,node)</B><BR>causes
+changing to zero all elements in <B>node</B> column and in all
+columns corresponding to the descendants of a given node to be reset
+in table D (the whole branch is deleted). You will also need to
+create a leaf on a given node, i.e. assign a class label to the leaf
+- e.g. the most represented in it.</P>
+<P LANG="en-US" STYLE="margin-left: 1.27cm; text-indent: -0.64cm; line-height: 150%">
+2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; After implementing our own pruning
+method, we compare the classification error before and after pruning
+for the training and test sets (the reduction of average test error
+value should be positive). For the given data set we choose the
+pruning method so as to reduce the average classification error for
+the test set as much as possible (improve the generalization)
+regardless of the content of the training set - script <B>build_xxx.m</B>.
+You can additionally divide the learning set into a subset for tree
+building and validation - checking what generalization can look like
+or build a tree using all the learning examples. The use of a test
+set for tree construction or pruning is prohibited!</P>
+<P LANG="en-US" STYLE="margin-left: 1.27cm; text-indent: -0.64cm; line-height: 150%">
+3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Comparison of decision trees to
+neural networks considering generalization (if required by the
+teacher).</P>
+<P STYLE="line-height: 150%">Packages:</P>
+<P STYLE="line-height: 150%"><A HREF="DecisionTrees_Matlab.zip">Matlab
+version</A></P>
+<P STYLE="line-height: 150%"><A HREF="DecisionTrees_Python.zip">Python
+version</A></P>
+<P STYLE="line-height: 150%">&nbsp;</P>
+<P STYLE="line-height: 150%">&nbsp;</P>
+</BODY>
+</HTML>
