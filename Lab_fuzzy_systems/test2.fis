@@ -1,0 +1,58 @@
+[System]
+Name='test2'
+Type='mamdani'
+Version=2.0
+NumInputs=3
+NumOutputs=1
+NumRules=11
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='amount_of_fuel'
+Range=[0 1000]
+NumMFs=1
+MF1='exist':'linsmf',[-1 -1]
+
+[Input2]
+Name='x'
+Range=[0 4000]
+NumMFs=3
+MF1='low':'trapmf',[5 20 80 100]
+MF2='high':'linsmf',[80 150]
+MF3='ground':'trapmf',[0 0 10 40]
+
+[Input3]
+Name='V'
+Range=[-300 300]
+NumMFs=5
+MF1='positive':'linsmf',[0 5]
+MF2='negative':'linzmf',[-5 0]
+MF3='mid':'trimf',[-5 0 5]
+MF4='very negative':'linzmf',[-300 -20]
+MF5='mid negative':'trapmf',[-20 -20 -10 -5]
+
+[Output1]
+Name='F'
+Range=[0 31403]
+NumMFs=4
+MF1='zero':'trimf',[0 0 0]
+MF2='positivemax':'linsmf',[0 31403]
+MF3='balance':'trimf',[0 15701 31403]
+MF4='moderate':'trapmf',[0 15701 24000 32000]
+
+[Rules]
+1 2 1, 1 (1) : 1
+1 1 1, 1 (1) : 1
+1 1 3, 3 (1) : 1
+1 2 4, 2 (1) : 1
+1 1 4, 3 (1) : 1
+1 1 5, 3 (1) : 1
+0 3 5, 4 (1) : 1
+1 3 3, 1 (1) : 1
+1 3 4, 4 (1) : 1
+1 3 1, 1 (1) : 1
+1 2 5, 3 (1) : 1

@@ -1,0 +1,68 @@
+% Define the input variables
+amountOfFuel = 1000;
+height = 2000;
+speed = 50;
+
+% Define the output variable
+thrust = 0;
+
+% Create a Fuzzy Logic System
+fis = newfis('ThrustControlSystem');
+
+% Define the input variables using addInput
+fis = addInput(fis, [0 3000], 'Name', 'Amount of Fuel');
+fis = addInput(fis, [0 4000], 'Name', 'Height');
+fis = addInput(fis, [0 100], 'Name', 'Speed');
+
+% Define the input membership functions using addMF
+fis = addMF(fis, 'Amount of Fuel', 'trimf', [0 0 1500], 'Name', 'Low');
+fis = addMF(fis, 'Amount of Fuel', 'trimf', [0 1500 3000], 'Name', 'Medium');
+fis = addMF(fis, 'Amount of Fuel', 'trimf', [1500 3000 3000], 'Name', 'High');
+
+fis = addMF(fis, 'Height', 'trimf', [0 0 2000], 'Name', 'Low');
+fis = addMF(fis, 'Height', 'trimf', [0 2000 4000], 'Name', 'Medium');
+fis = addMF(fis, 'Height', 'trimf', [2000 4000 4000], 'Name', 'High');
+
+fis = addMF(fis, 'Speed', 'trimf', [0 0 50], 'Name', 'Slow');
+fis = addMF(fis, 'Speed', 'trimf', [0 50 100], 'Name', 'Medium');
+fis = addMF(fis, 'Speed', 'trimf', [50 100 100], 'Name', 'Fast');
+
+% Define the output variable using addOutput
+fis = addOutput(fis, [0 1], 'Name', 'Thrust');
+
+% Define the output membership functions using addMF
+fis = addMF(fis, 'Thrust', 'trimf', [0 0 0.5], 'Name', 'Low');
+fis = addMF(fis, 'Thrust', 'trimf', [0 0.5 1], 'Name', 'Medium');
+fis = addMF(fis, 'Thrust', 'trimf', [0.5 1 1], 'Name', 'High');
+
+
+% Define the fuzzy rules
+rule1 = [1 1 1 1 0.2];
+rule2 = [1 2 2 1 0.5];
+rule3 = [1 3 2 2 0.5];
+rule4 = [2 1 1 1 0.2];
+rule5 = [2 2 2 2 0.5];
+rule6 = [2 3 3 2 0.5];
+rule7 = [3 1 3 2 0.2];
+rule8 = [3 2 3 2 0.5];
+rule9 = [3 3 3 3 0.9];
+
+% Add rules to the fuzzy system
+ruleList = [rule1; rule2; rule3; rule4; rule5; rule6; rule7; rule8; rule9];
+fis = addRule(fis, ruleList);
+
+% Evaluate the fuzzy system
+inputs = [amountOfFuel height speed];
+thrust = evalfis(fis, inputs);
+
+% Calculate the desired thrust value
+desiredThrust = 0.3;  % Adjust this value to control the desired thrust
+
+% Adjust the output to achieve the desired thrust
+if thrust < desiredThrust
+    thrust = thrust + 0.1;  % Increase the thrust to reach the desired value
+else
+    thrust = thrust - 0.1;  % Decrease the thrust to reach the desired value
+end
+
+disp(['Output Thrust: ' num2str(thrust)]);
