@@ -4,6 +4,8 @@ import pdb
 import numpy as np
 import matplotlib.pyplot as plt
 import dec_tree_func as dt
+import math
+import decimal
 
 #os.system('cls')
 
@@ -11,7 +13,7 @@ import dec_tree_func as dt
 #file_name = 'car/car.txt'
 #file_name = 'tic/tic.txt'
 #file_name = 'letters1.txt'
-file_name = 'D:\Desktop\Salih\Belgeler\VSCCode\Python\Artificial-Intelligence\Lab_Decision_Trees\letters2.txt'
+file_name = 'D:\Desktop\Salih\Belgeler\VSCCode\Python\Artificial-Intelligence\Lab_Decision_Trees\letters1.txt'
 #file_name = 'letters3.txt'
 #file_name = 'letters5.txt'
 
@@ -34,7 +36,7 @@ examples = dt.load_data(file_name)
 [num_of_examples, num_of_columns] = examples.shape
 num_of_training_examples = num_of_examples//2
 num_of_test_examples = num_of_examples - num_of_training_examples
-number_for_constr = np.ceil(num_of_training_examples*part_for_constr/100)   # number of examples for tree construction 
+number_for_constr = math.ceil(num_of_training_examples*part_for_constr/100)   # number of examples for tree construction 
 #print("num_of_training_examples = " + str(num_of_training_examples)+ " num_of_test_examples = "+str(num_of_test_examples))
 
 mean_test_error = 0
@@ -71,48 +73,14 @@ for eksp in range(number_of_experiments):
 
     mean_test_error += num_of_test_errors/num_of_test_examples/number_of_experiments 
 
-    # pruning:
     pruned_tree = np.copy(tree)
-    [num_of_rows, num_of_nodes] = pruned_tree.shape
-    for i in range(num_of_rows):
-        if pruned_tree[i][1] == 0 and pruned_tree[i][2] == 0:
-            # if this node is a leaf, try to remove it and see if it improves test error
-            pruned_tree[i][4] = 0 # set the class of the leaf to 0 (unclassified)
-            num_of_test_errors_prun = dt.calc_error(test_vectors,test_classes,pruned_tree)
-            if num_of_test_errors_prun < num_of_test_errors:
-                # removing the leaf improves test error, so remove it permanently
-                pruned_tree[i][0] = 0
-                pruned_tree[i][1] = 0
-                pruned_tree[i][2] = 0
-                pruned_tree[i][3] = 0
-                pruned_tree[i][4] = np.argmax(dt.distribution(train_vectors,train_classes,pruned_tree)[i])
-        elif pruned_tree[i][1] != 0 and pruned_tree[i][2] != 0:
-            # if this node is not a leaf, try removing one of its child nodes and see if it improves test error
-            left_child_index = int(pruned_tree[i][1])
-            right_child_index = int(pruned_tree[i][2])
-            if left_child_index >= 0 and left_child_index < num_of_rows and pruned_tree[left_child_index][1] == 0 and pruned_tree[left_child_index][2] == 0:
-                # try removing the left child node
-                pruned_tree[left_child_index][0] = 0
-                pruned_tree[left_child_index][1] = 0
-                pruned_tree[left_child_index][2] = 0
-                pruned_tree[left_child_index][3] = 0
-                pruned_tree[left_child_index][4] = np.argmax(dt.distribution(train_vectors,train_classes,pruned_tree)[left_child_index])
-                num_of_test_errors_prun = dt.calc_error(test_vectors,test_classes,pruned_tree)
-                if num_of_test_errors_prun < num_of_test_errors:
-                    # removing the left child node improves test error, so remove it permanently
-                    pruned_tree[i][1] = 0
-            elif right_child_index < num_of_rows and pruned_tree[right_child_index][1] == 0 and pruned_tree[right_child_index][2] == 0:
 
-                # try removing the right child node
-                pruned_tree[right_child_index][0] = 0
-                pruned_tree[right_child_index][1] = 0
-                pruned_tree[right_child_index][2] = 0
-                pruned_tree[right_child_index][3] = 0
-                pruned_tree[right_child_index][4] = np.argmax(dt.distribution(train_vectors,train_classes,pruned_tree)[right_child_index])
-                num_of_test_errors_prun = dt.calc_error(test_vectors,test_classes,pruned_tree)
-                if num_of_test_errors_prun < num_of_test_errors:
-                    # removing the right child node improves test error, so remove it permanently
-                    pruned_tree[i][2] = 0  
+    # pruning:
+    # a place for your algorithm here!
+    # ...............................
+    # ...............................
+    # ...............................
+    # ...............................
 
 
     

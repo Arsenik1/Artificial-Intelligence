@@ -7,7 +7,7 @@ import dec_tree_func as dt
 
 os.system('cls')
 
-file_name = "D:/Desktop/Salih/Belgeler/VSCCode/Python/AI/Lab_Decision_Trees/lenses/lenses.txt"
+file_name = "D:\Desktop\Salih\Belgeler\VSCCode\Python\Artificial-Intelligence\Lab_Decision_Trees\lenses\lenses.txt"
 #file_name = "car/car.txt"
 
 print("\n\n\nbuilding tree for " + file_name)

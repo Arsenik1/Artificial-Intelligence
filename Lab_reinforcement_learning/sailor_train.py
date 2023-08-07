@@ -12,7 +12,7 @@ alpha = 0.05                                # training speed factor
 epsilon = 0.01                               # exploration factor
 
 #file_name = 'map_small.txt'
-file_name = 'D:\Desktop\Salih\Belgeler\VSCCode\Python\AI\Lab_rf2023_ver1\map_small.txt'
+file_name = 'D:\Desktop\Salih\Belgeler\VSCCode\Python\Artificial-Intelligence\Lab_reinforcement_learning\map_small.txt'
 #file_name = 'D:\Desktop\Salih\Belgeler\VSCCode\Python\AI\Lab_rf2023_ver1\map_middle.txt'
 #file_name = 'map_big.txt'
 #file_name = 'map_spiral.txt'
